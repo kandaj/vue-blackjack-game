@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="row mt-3" v-if="gameEnd">
-      <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h4 class="alert alert-success" role="alert" v-if="player.won || blackJack"><span v-if="blackJack">Its a Blackjack!</span> You Won!!!</h4>
         <h4  class="alert alert-danger" role="alert" v-if="dealer.won">You Lost</h4>
         <h4  class="alert alert-warning" role="alert" v-if="draw">Draw</h4>

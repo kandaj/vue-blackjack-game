@@ -9,7 +9,7 @@
       <div class="col-xs-12 col-sm-12 text-center">
         <button v-on:click="start"  v-if="!gameInProgress && !gameEnd" class="btn btn-primary">Start Game</button>
         <button v-on:click="playAgain" v-if="gameEnd"  class="btn btn-primary">Play Again</button>
-        <button v-on:click="restart" v-if="gameEnd"  class="btn btn-primary">Restart</button>
+        <button v-on:click="restart" v-if="gameEnd"  class="btn btn-primary">Reset scores</button>
       </div>
     </div>
     <div class="row mt-3" v-if="player.timesWon || dealer.timesWon">

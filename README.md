@@ -2,6 +2,8 @@
 
 > Jack Black Game
 
+[Demo](https://vue-blackjack-game.herokuapp.com/)
+
 ## Build Setup
 
 ``` bash

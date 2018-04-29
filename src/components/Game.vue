@@ -225,11 +225,12 @@ export default {
         this.player.timesWon = this.player.timesWon + 1
       } else if (playerPoints > 21) {
         this.dealer.won = true
-        this.dealer.timesWon = this.player.timesWon + 1
+        this.dealer.timesWon = this.dealer.timesWon + 1
       } else if (playerPoints === dealerPoints) {
         this.draw = true
       } else {
         this.dealer.won = true
+        this.dealer.timesWon = this.dealer.timesWon + 1
       }
     },
     cardObject: function (card) {

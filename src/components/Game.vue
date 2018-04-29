@@ -17,7 +17,7 @@
         <div><h4>Scores</h4></div>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div><h4>Player: {{player.timesWon}}  Dealer: {{dealer.timesWon}}</h4></div>
+        <div><h4>You: {{player.timesWon}}  Dealer: {{dealer.timesWon}}</h4></div>
       </div>
     </div>
     <div class="row mt-3" v-if="gameInProgress && !gameEnd">
@@ -35,7 +35,7 @@
     </div>
     <div class="row mt-3"  v-if="gameInProgress || gameEnd">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-        <h3>Player <span v-if="player.points">Points: {{player.points}}</span></h3>
+        <h3>Your <span v-if="player.points">Points: {{player.points}}</span></h3>
         <div class="row mt-3">
           <div class="col-xs-1 col-sm-1 col-md-4 col-lg-4"></div>
             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" v-for="(card,index) in this.player.cards" v-bind:key="index">
@@ -122,10 +122,7 @@ export default {
         this.player.cards.push(this.dealCards())
         this.dealer.cards.push(this.dealCards())
       }
-      this.player.points = this.checkTotal(this.player.cards)
-      if (this.player.points === 21) {
-        this.blackJack = true
-      }
+      this.checkBlackJack()
     },
     restart: function () {
       this.player.timesWon = 0
@@ -192,10 +189,13 @@ export default {
       this.gameInProgress = false
       this.gameEnd = true
       this.dealer.points = this.checkTotal(this.dealer.cards)
-      while (this.dealer.points < 17) {
-        this.dealer.cards.push(this.dealCards())
-        this.dealer.points = this.checkTotal(this.dealer.cards)
+      if (!this.blackJack) {
+        while (this.dealer.points < 17) {
+          this.dealer.cards.push(this.dealCards())
+          this.dealer.points = this.checkTotal(this.dealer.cards)
+        }
       }
+
       this.checkWinner()
     },
     checkTotal: function (cards) {
@@ -208,7 +208,7 @@ export default {
         total = total + cards[i].weight
       }
       if (total > 21 && aceCount !== 0) {
-        for (let i = 0; i < aceCount; i++) {
+        for (let i = 0; i <= aceCount; i++) {
           aceCount = aceCount - 1
           total = total - 10
         }
@@ -219,7 +219,6 @@ export default {
     checkWinner: function () {
       const playerPoints = this.player.points
       const dealerPoints = this.dealer.points
-
       if ((playerPoints < 22 && dealerPoints < playerPoints) || (dealerPoints > 21 && playerPoints < 22)) {
         this.player.won = true
         this.player.timesWon = this.player.timesWon + 1
@@ -231,6 +230,13 @@ export default {
       } else {
         this.dealer.won = true
         this.dealer.timesWon = this.dealer.timesWon + 1
+      }
+    },
+    checkBlackJack: function () {
+      this.player.points = this.checkTotal(this.player.cards)
+      if (this.player.points === 21) {
+        this.blackJack = true
+        this.endGame()
       }
     },
     cardObject: function (card) {
@@ -345,19 +351,6 @@ export default {
   }
 
    .card-back::after {
-    /*height: 160px;*/
-    /*width: 120px;*/
-    /*padding: 3px;*/
-    /*border: 1px solid black;*/
-    /*background-color: white;*/
-    /*border-radius: 10px;*/
-    /*!*position: absolute;*!*/
-    /*left: 100px;*/
-    /*display: inline-block;*/
-    /*font-family: 'Lato';*/
-    /*-moz-box-shadow:    inset 0 0 1px #000000;*/
-    /*-webkit-box-shadow: inset 0 0 1px #000000;*/
-    /*box-shadow:         inset 0 0 1px #000000;*/
     content: '\1F0A0';
   }
   .card-back::after {
